@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('opdracht 5') {
+        stage('checkout code') {
             steps {
-                echo 'good luck...'
+                git branch: 'main', url: 'https://github.com/ThibaudSchoolmeestersPXL/calculator-app-finished.git'
             }
         }
     }
