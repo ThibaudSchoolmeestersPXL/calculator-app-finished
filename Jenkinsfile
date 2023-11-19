@@ -15,7 +15,7 @@ pipeline {
         }
         stage('opdracht 5') {
             steps {
-                sh 'pwd'
+                // sh 'pwd'
                 sh 'rm -rf ./*'
             }
         }
@@ -31,11 +31,11 @@ pipeline {
           }
         }
 
-        stage('unittest') {
+        stage('unit test') {
           steps {
             sh 'npm run test'
             junit "junit.xml"
-            sh 'ls -lah'
+            // sh 'ls -lah'
           }
         }
 
@@ -47,7 +47,7 @@ pipeline {
             sh 'cp *.js* bundle'
             sh 'cp Dockerfile bundle'
             sh 'cp docker-compose.yml bundle'
-            sh 'ls -lah ./bundle'
+            // sh 'ls -lah ./bundle'
             sh 'zip bundle.zip bundle'
           }
         }
