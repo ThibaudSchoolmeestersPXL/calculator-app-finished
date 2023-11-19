@@ -1,9 +1,21 @@
 pipeline {
     agent any
+    
+    tools {
+        nodejs "nodetin"
+    }
+    
     stages {
+        stage('Print versions and debug info') {
+            steps {
+                sh 'whoami'
+                sh 'node -v'
+                sh 'npm -v'
+            }
+        }
         stage('opdracht 5') {
             steps {
-                echo "good luck..."
+                sh 'pwd'
                 sh 'rm -rf ./*'
             }
         }
@@ -23,6 +35,7 @@ pipeline {
           steps {
             sh 'npm run test'
             junit "junit.xml"
+            sh 'ls -lah'
           }
         }
 
@@ -34,6 +47,7 @@ pipeline {
             sh 'cp *.js* bundle'
             sh 'cp Dockerfile bundle'
             sh 'cp docker-compose.yml bundle'
+            sh 'ls -lah ./bundle'
             sh 'zip bundle.zip bundle'
           }
         }
