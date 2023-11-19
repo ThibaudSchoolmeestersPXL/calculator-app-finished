@@ -1,10 +1,58 @@
 pipeline {
     agent any
     stages {
-        stage('checkout code') {
+        stage('opdracht 5') {
             steps {
-                git branch: 'main', url: 'https://github.com/ThibaudSchoolmeestersPXL/calculator-app-finished.git'
+                echo "good luck..."
+                sh 'rm -rf ./*'
             }
         }
+        stage('checkout code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/EmirKaanOzverPXL/calculator-app-finished'
+            }
+        }
+
+        stage('install dependencies') {
+          steps {
+            sh 'npm install'
+          }
+        }
+
+        stage('unittest') {
+          steps {
+            sh 'npm run test'
+            junit "junit.xml"
+          }
+        }
+
+        stage('create bundle') {
+          steps {
+            sh 'mkdir bundle'
+            sh 'cp -r node_modules bundle'
+            sh 'cp -r public bundle'
+            sh 'cp *.js* bundle'
+            sh 'cp Dockerfile bundle'
+            sh 'cp docker-compose.yml bundle'
+            sh 'zip bundle.zip bundle'
+          }
+        }
+    }
+
+    post {
+      success {
+        sh 'mkdir artifacts'
+        archiveArtifacts artifacts: 'bundle.zip', fingerprint: true
+      }
+
+      failure {
+        script {
+          def errorLogPath = '/var/lib/jenkins/jenkinserrorlog'
+          def currentDate = new Date().toString()
+          def errorMessage = "pipeline poging faalt op $currentDate"
+
+          writeFile file: errorLogPath, text: errorMessage
+        }
+      }
     }
 }
