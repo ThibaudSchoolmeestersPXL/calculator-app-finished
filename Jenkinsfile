@@ -9,7 +9,7 @@ pipeline {
         }
         stage('checkout code') {
             steps {
-                git branch: 'main', url: 'https://github.com/EmirKaanOzverPXL/calculator-app-finished'
+                git branch: 'main', url: 'https://github.com/ThibaudSchoolmeestersPXL/calculator-app-finished.git'
             }
         }
 
